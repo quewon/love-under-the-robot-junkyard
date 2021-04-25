@@ -12,24 +12,24 @@ window.onload = function() {
     powergained: new Howl({src: "sounds/powergained.wav"}),
     click: new Howl({src: "sounds/click.wav"}),
     atmosphere: new Howl({
-      src: "sounds/atmosphere.mp3",
+      src: "sounds/atmosphere.wav",
       loop: true,
     }),
   };
 
   music = {
     1: [
-      new Howl({src: "music/bell.mp3"}),
-      new Howl({src: "music/lowkey.mp3"}),
+      new Howl({src: "music/bell.wav"}),
+      new Howl({src: "music/lowkey.wav"}),
     ],
     2: [
-      new Howl({src: "music/pad.mp3"}),
-      new Howl({src: "music/perc.mp3"}),
-      new Howl({src: "music/bass.mp3"}),
+      new Howl({src: "music/pad.wav"}),
+      new Howl({src: "music/perc.wav"}),
+      new Howl({src: "music/bass.wav"}),
     ],
     3: [
-      new Howl({src: "music/keys.mp3"}),
-      new Howl({src: "music/tuba.mp3"}),
+      new Howl({src: "music/keys.wav"}),
+      new Howl({src: "music/tuba.wav"}),
     ]
   };
 
