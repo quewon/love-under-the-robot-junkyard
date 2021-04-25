@@ -16,16 +16,16 @@ function init_robots() {
 
   robots["partstealer1"] = new Robot(
     "<p class='partstealer one'>R</p>",
-    function(subject, object) {
-      object.fightForParts(subject);
+    function(subject, object, dir) {
+      object.fightForParts(subject, object, dir);
     },
     1,
     "discarded robot",
   );
   robots["partstealer2"] = new Robot(
     "<p class='partstealer two'>R</p>",
-    function(subject, object) {
-      object.fightForParts(subject);
+    function(subject, object, dir) {
+      object.fightForParts(subject, object, dir);
     },
     1,
     "discarded robot",
@@ -33,8 +33,8 @@ function init_robots() {
   );
   robots["partstealer3"] = new Robot(
     "<p class='partstealer three'>R</p>",
-    function(subject, object) {
-      object.fightForParts(subject);
+    function(subject, object, dir) {
+      object.fightForParts(subject, object, dir);
     },
     1,
     "discarded robot",
@@ -42,9 +42,9 @@ function init_robots() {
   );
   robots["powersuck1"] = new Robot(
     "<p class='powersuck'>R</p>",
-    function(subject, object) {
+    function(subject, object, dir) {
       let gamble = Math.floor(1 + Math.random() * 3);
-      object.fightForPower(subject, gamble);
+      object.fightForPower(subject, gamble, dir);
     },
     1,
     "discarded robot",
@@ -52,9 +52,9 @@ function init_robots() {
   );
   robots["powersuck2"] = new Robot(
     "<p class='powersuck'>R</p>",
-    function(subject, object) {
+    function(subject, object, dir) {
       let gamble = Math.floor(1 + Math.random() * 7);
-      object.fightForPower(subject, gamble);
+      object.fightForPower(subject, gamble, dir);
     },
     1,
     "discarded robot",
@@ -91,7 +91,6 @@ function init_robots() {
     },
     null,
     "core 2.0",
-    // "like new - converts rubble & trash into energy"
     "like new - doesn't do anything particularly special, though"
   );
   parts.core["oldcore"] = new Part(
@@ -110,7 +109,7 @@ function init_robots() {
   parts.movement["oldbooster"] = new Part(
     "movement",
     "<span class='movement old'>m</span>",
-    0,
+    1,
     function(subject) {
       if (subject == robots.player) {
         addPlayerSpeed(config.speed / 5);
@@ -163,8 +162,8 @@ function init_robots() {
     movement: ["oldbooster"],
   };
 
-  robots["partstealer1"].gainPart("movement");
-  robots["partstealer2"].gainPart("digger");
+  robots["partstealer1"].gainPart("digger");
+  robots["partstealer2"].gainPart("core");
   robots["partstealer3"].gainPart("core");
   robots["powersuck1"].gainPart("core");
   robots["powersuck2"].gainPart("core");
@@ -226,26 +225,25 @@ class Robot {
     }
 
     if (this.digSize > 1) {
-      let dug = false;
+      let dug = false; // if "candig()" is being fired then its a block with dig sfx
 
+      // make current cell empty
       map[this.y][this.x] = whitespace;
+
       for (let i=0; i<this.digSize; i++) {
         let newy = y;
         let newx = x;
         let offset = i - Math.floor(this.digSize/2);
-
         if (dir != "down") {
           newy = y + offset;
         } else {
           newx = x + offset;
         }
-
         if (newx > config.map_width - 1) {
           newx = 0;
         } else if (newx < 0) {
           newx = config.map_width - 1
         }
-
         if (newy >= config.map_height - 2) {
           if (newx == robots.love.x && offset == 0) {
             newy = config.map_height - 1
@@ -262,7 +260,7 @@ class Robot {
           } else {
             if (offset == 0) {
               map[this.y][this.x] = this.display;
-              candig.oncollision(this, candig);
+              candig.oncollision(this, candig, {x: newx, y: newy});
             }
           }
         }
@@ -300,7 +298,7 @@ class Robot {
         if (candig=="ondig") {
           sounds.digs[Math.floor(Math.random() * sounds.digs.length)].play();
         } else {
-          candig.oncollision(this, candig);
+          candig.oncollision(this, candig, {x: x, y: y});
         }
       }
       if (typeof candig !== 'object' && candig) {
@@ -321,6 +319,8 @@ class Robot {
     }
   }
   dig(x, y) {
+    if (map[y][x] == whitespace) return true
+
     if (
       y < config.map_height && y >= 0 &&
       x < config.map_width && x >= 0
@@ -347,9 +347,9 @@ class Robot {
           d.ondig(this);
           return "ondig"
         }
-      } else {
+      } //else {
         // sounds.walks[Math.floor(Math.random() * sounds.walks.length)].play();
-      }
+      // }
 
     } else {
       return false
@@ -429,12 +429,18 @@ class Robot {
         }
 
         if (type=="digger") {
-          this.digSize -= 2;
+          this.digSize = 1;
+          for (let i in this.parts.digger) {
+            if (this.parts.digger[i] != 0) {
+              this.parts.digger[i].ongain(this)
+            }
+          }
         }
 
         return partlost
       }
     }
+    return undefined
   }
   updateIntegrity() {
     let sum = 0;
@@ -462,12 +468,12 @@ class Robot {
         };
       } else {
         ui.mod.core[0].onmouseover = function() {
-          tooltip(core.ttname + ' //<br/>status: ' + core.tooltip + '<br />integrity: ' + player.integrity)
+          tooltip(core.ttname + ' //<br/>status: ' + core.status + '<br />integrity: ' + player.integrity)
         }
       }
     }
   }
-  fightForParts(robot) {
+  fightForParts(robot, object, dir) {
     if (robot == robots.player) {
       if (!config.partStolen) {
         config.partStolen = true;
@@ -475,61 +481,42 @@ class Robot {
     }
 
     let type;
-    if (this.layer >= 1) { type = "movement" }
-    if (this.layer >= 2) { type = "digger" }
+    if (this.layer >= 1) { type = "digger" }
+    if (this.layer >= 2) { type = "core" }
     if (this.layer >= 3) { type = "core" }
 
     if (this.integrity >= robot.integrity) {
-      // steal a part
       let partlost = robot.losePart(type);
 
       if (partlost == undefined) {
         a(d.partstealerwithnoparts);
       } else {
-        this.gainPart(partlost.type, partlost);
-        this.updateIntegrity();
         robot.updateIntegrity();
         a(d.partlost);
       }
     } else {
       let partlost = this.losePart(type);
-
-      if (partlost == undefined) {
-        a(d.partstealingwithnoparts);
-      } else {
-        if (robot == robots.player) {
-          robot.gainPart(partlost.type, partlost);
-          a(d.takeparts)
-          // q(d.takeparts, {
-          //   "take its parts": function() {
-          //     robot.gainPart(partlost.type, partlost);
-          //   },
-          //   "offer up a part": function() {
-          //
-          //   }
-          // });
-        } else {
-          robot.gainPart(partlost.type, partlost);
-        }
-      }
+      this.gainPart(type);
+      robot.gainPart(type);
+      clear(dir.x, dir.y);
+      a(d.takeparts);
     }
   }
-  fightForPower(subject, gamble) {
+  fightForPower(subject, gamble, dir) {
     if (subject == robots.player) {
       if (!config.powerSucked) {
         config.powerSucked = true;
       }
-
-      if (this.integrity >= subject.integrity) {
-        // suck power
-        powerPlayer(-1 * gamble);
-        if (subject == robots.player) a(d.powerlost);
-      } else {
-        powerPlayer(gamble);
-        if (subject == robots.player) a(d.powergained);
-        map[this.y][this.x] = whitespace;
-        refresh();
-      }
+    }
+    if (this.integrity >= subject.integrity) {
+      powerPlayer(gamble * -1);
+      sounds.powerlost.play()
+      if (subject == robots.player) a(d.powerlost);
+    } else {
+      powerPlayer(gamble);
+      if (subject == robots.player) a(d.powergained);
+      sounds.powergained.play()
+      clear(dir.x, dir.y)
     }
   }
 }

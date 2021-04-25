@@ -147,12 +147,7 @@ var countdown;
 function drainBattery() {
   if (menu_open) return
 
-  time--;
-  ui.time.textContent = time;
-
-  if (time <= 0) {
-    game_over();
-  }
+  powerPlayer(-1);
 
   let core = robots.player.parts.core[0];
   if (core != 0) {

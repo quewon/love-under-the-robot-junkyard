@@ -160,3 +160,8 @@ function refresh() {
 
   main.innerHTML = text;
 }
+
+function clear(x, y) {
+  map[y][x] = whitespace;
+  refresh();
+}

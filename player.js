@@ -132,19 +132,14 @@ function tooltip(text) {
 }
 
 function powerPlayer(value) {
-  time += value;
+  time = parseInt(time, 10) + value;
   if (time > 100) { time = 100 }
-  if (time < 0) {
+  if (time <= 0) {
     time = 0;
     game_over();
   }
-  ui.time.textContent = time;
 
-  if (value > 0) {
-    sounds.powergained.play()
-  } else {
-    sounds.powerlost.play()
-  }
+  ui.time.textContent = time;
 }
 
 function a(text) {
