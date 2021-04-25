@@ -156,7 +156,9 @@ function drainBattery() {
 
   let core = robots.player.parts.core[0];
   if (core != 0) {
-    core.func();
+    if (core.func) {
+      core.func();
+    }
   }
 }
 

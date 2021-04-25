@@ -38,10 +38,10 @@
           a bite-sized game by <a onmouseover="tooltip('frogmanbard.itch.io')" onmouseout="tooltip()" href="https://frogmanbard.itch.io/" target="_blank">q1</a><br />
           <p style="float:right">(for the <span class="player" onmouseout="tooltip()" onmouseover="tooltip('Ludum Dare 48 //<br />48 hours to make a game solo from scratch')">LD</span> game jam)</p><br /><br />
           <em>wasd</em> keys to move<br />
-          <em>mouse over things</em> for info<br />
+          <em>mouse over text</em> for info<br />
           <br />
           <button onclick="sounds.click.play();pause();config.mode='hard';ui.a.classList.add('hidden');restart()">play</button>
-          <button onclick="sounds.click.play();pause();config.mode='peaceful';ui.a.classList.add('hidden');restart()">peaceful mode</button>
+          <button onmouseout="tooltip()" onmouseover="tooltip('get a feel for the world')" onclick="sounds.click.play();pause();config.mode='peaceful';ui.a.classList.add('hidden');restart()">peaceful mode</button>
         </p>
       </div>
 

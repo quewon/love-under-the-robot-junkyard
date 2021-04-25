@@ -5,27 +5,27 @@ function init_diggables() {
     "<p class='ground1_1'>#</p>",
     "$ bit(s) of trash",
     "trash",
-    1000);
+    160);
   diggables["L1_2"] = new Diggable(
     "<p class='ground1_2'>#</p>",
     "$ bit(s) of rubble",
     "rubble",
-    1000);
+    160);
   diggables["L2_1"] = new Diggable(
       "<p class='ground2_1'>#</p>",
       "$ bit(s) of compact trash",
       "compact trash",
-      1500);
+      170);
   diggables["L2_2"] = new Diggable(
       "<p class='ground2_2'>#</p>",
       "$ bit(s) of compact rubble",
       "compact rubble",
-      1500);
+      170);
   diggables["bedrock"] = new Diggable(
       "<p class='bedrock'>#</p>",
       "$ bit(s) of bedrock",
       "bedrock",
-      1000);
+      300);
   diggables["P1"] = new Diggable(
     "<p class='powerbank1'>P</p>",
     null,
@@ -40,7 +40,7 @@ function init_diggables() {
     "<p class='powerbank1'>p</p>",
     null,
     "powerbank",
-    4,
+    2,
     function() {
       powerPlayer(1 + Math.floor(Math.random() * 2));
       a(d.powerbank);
@@ -50,19 +50,19 @@ function init_diggables() {
     "robotspawner",
     null,
     "robotspawner",
-    35
+    10
   );
   diggables["R2"] = new Diggable(
     "robotspawner",
     null,
     "robotspawner",
-    25
+    15
   );
   diggables["R3"] = new Diggable(
     "robotspawner",
     null,
     "robotspawner",
-    35
+    20
   );
 
   diggables["movement_parts"] = new Diggable(
@@ -92,12 +92,12 @@ function init_diggables() {
   layers.diggables = {};
   let l = layers.diggables;
 
-  l[1] = ["L1_1", "L1_2", "P1", "p1", "R1", "movement_parts"];
+  l[1] = ["L1_1", "L1_2", "p1", "P1", "R1", "movement_parts"];
   l[2] = ["L2_1", "L2_2", "R2", "p1", "digger_parts"];
-  l[3] = ["bedrock", "P1", "R3", "movement_parts", "digger_parts"];
+  l[3] = ["bedrock", "R3", "movement_parts", "digger_parts"];
 
   if (config.discardedDiggerPartFound) {
-    diggables["digger_partrs"].mapTooltip = "drills"
+    diggables["digger_parts"].mapTooltip = "drills"
   }
   if (config.discardedMovementPartFound) {
     diggables["movement_parts"].mapTooltip = "boosters"

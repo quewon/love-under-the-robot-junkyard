@@ -24,15 +24,15 @@ html {
 
   --trash: #719399;
   --rubble: #85a1a6;
-  --ctrash: #3a575c;
-  --crubble: #344c52;
+  --ctrash: #719399;
+  --crubble: #203940;
   --bedrock: #203940;
 
   --power: #ceebbc;
   --unpower: #c4cfc2;
 
   --old: var(--player);
-  --new: #aa34d9;
+  --new: #22ffa9;
 
   color: var(--text);
   background-color: var(--bg);
@@ -181,9 +181,9 @@ h1 {
   margin-top: 0;
 }
 
-.movement { font-style: italic; }
+.movement { font-style: italic; cursor:help }
 .core { font-weight: 900; cursor: help }
-.digger { text-decoration: underline; }
+.digger { text-decoration: underline; cursor:help }
 
 .player { color: var(--player); opacity:1 !important; cursor: help; }
 .love { color: var(--love) }

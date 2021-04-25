@@ -84,26 +84,26 @@ function init_robots() {
     "core",
     "<span class='core new'>X</span>",
     3,
-    null,
     function(subject) {
       if (subject == robots.player) {
-        let inv = subject.inventory;
-        console.log(inv);
+        updateDrainSpeed(config.drainSpeed * 3);
       }
     },
+    null,
     "core 2.0",
-    "like new - converts rubble & trash into energy"
+    // "like new - converts rubble & trash into energy"
+    "like new - doesn't do anything particularly special, though"
   );
   parts.core["oldcore"] = new Part(
     "core",
     "<span class='core old'>C</span>",
     1,
-    null,
     function(subject) {
       if (subject == robots.player) {
-        updateDrainSpeed(config.drainSpeed / 1.5);
+        updateDrainSpeed(config.drainSpeed * 1.5);
       }
     },
+    null,
     "old core",
     "old - battery drains slower"
   );
@@ -372,17 +372,6 @@ class Robot {
           if (this == robots.player) {
             ui.mod[type][slot].innerHTML = part.name;
             sounds.partgained.play();
-
-            if (!config.discardedDiggerPartFound) {
-              if (type=="digger") {
-                config.discardedDiggerPartFound = true
-              }
-            }
-            if (!config.discardedMovementPartFound) {
-              if (type=="movement") {
-                config.discardedMovementPartFound = true
-              }
-            }
           }
 
           this.updateIntegrity();
@@ -406,6 +395,17 @@ class Robot {
           }
 
           this.updateIntegrity();
+
+          if (!config.discardedDiggerPartFound) {
+            if (type=="digger") {
+              config.discardedDiggerPartFound = true
+            }
+          }
+          if (!config.discardedMovementPartFound) {
+            if (type=="movement") {
+              config.discardedMovementPartFound = true
+            }
+          }
           return
         }
       }
@@ -494,19 +494,23 @@ class Robot {
     } else {
       let partlost = this.losePart(type);
 
-      if (robot == robots.player) {
-        robot.gainPart(partlost.type, partlost);
-        a(d.takeparts)
-        // q(d.takeparts, {
-        //   "take its parts": function() {
-        //     robot.gainPart(partlost.type, partlost);
-        //   },
-        //   "offer up a part": function() {
-        //
-        //   }
-        // });
+      if (partlost == undefined) {
+        a(d.partstealingwithnoparts);
       } else {
-        robot.gainPart(partlost.type, partlost);
+        if (robot == robots.player) {
+          robot.gainPart(partlost.type, partlost);
+          a(d.takeparts)
+          // q(d.takeparts, {
+          //   "take its parts": function() {
+          //     robot.gainPart(partlost.type, partlost);
+          //   },
+          //   "offer up a part": function() {
+          //
+          //   }
+          // });
+        } else {
+          robot.gainPart(partlost.type, partlost);
+        }
       }
     }
   }
@@ -518,12 +522,13 @@ class Robot {
 
       if (this.integrity >= subject.integrity) {
         // suck power
-        map[this.y][this.x] = "";
         powerPlayer(-1 * gamble);
-        a(d.powerlost);
+        if (subject == robots.player) a(d.powerlost);
       } else {
         powerPlayer(gamble);
-        a(d.powergained);
+        if (subject == robots.player) a(d.powergained);
+        map[this.y][this.x] = whitespace;
+        refresh();
       }
     }
   }
