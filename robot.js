@@ -267,7 +267,7 @@ class Robot {
           }
         }
 
-        if (typeof candig !== 'object') {
+        if (typeof candig !== 'object' && candig) {
           map[newy][newx] = whitespace;
           if (offset == 0) {
             this.x = newx;
@@ -303,7 +303,7 @@ class Robot {
           candig.oncollision(this, candig);
         }
       }
-      if (typeof candig !== 'object') {
+      if (typeof candig !== 'object' && candig) {
         map[this.y][this.x] = whitespace;
         this.x = x;
         this.y = y;
