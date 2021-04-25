@@ -33,7 +33,26 @@ window.onload = function() {
     ]
   };
 
-  sounds.atmosphere.play();
+  let i = 0;
+  let check = setInterval(function() {
+    i++;
+    ui.loading.textContent += ".";
+    if (
+      sounds.atmosphere.state() == "loaded" &&
+      music[1][0].state() == "loaded" &&
+      music[1][1].state() == "loaded" &&
+      music[2][0].state() == "loaded" &&
+      music[2][1].state() == "loaded" &&
+      music[2][2].state() == "loaded" &&
+      music[3][0].state() == "loaded" &&
+      music[3][1].state() == "loaded"
+    ) {
+      ui.loading.classList.add("hidden");
+      ui.pause_menu.classList.remove("hidden");
+      sounds.atmosphere.play();
+      clearInterval(check);
+    }
+  }, 100);
 };
 
 var sounds;
@@ -112,6 +131,7 @@ var ui = {
   win_menu: document.getElementById("win_menu"),
   a: document.getElementById("a"),
   main: document.getElementById("main"),
+  loading: document.getElementById("loading"),
 };
 
 window.onmousemove = function(e) {
