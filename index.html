@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>💕🤖🗑️</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div id="container">
+
+      <div id="pause_menu">
+        <h1>love under the robot junkyard</h1>
+        <p>
+          a bite-sized game by <a onmouseover="tooltip('frogmanbard.itch.io')" onmouseout="tooltip()" href="https://frogmanbard.itch.io/" target="_blank">q1</a><br />
+          <p style="float:right">(for the <span class="player" onmouseout="tooltip()" onmouseover="tooltip('Ludum Dare 48 //<br />48 hours to make a game solo from scratch')">LD</span> game jam)</p><br /><br />
+          <em>wasd</em> keys to move<br />
+          <em>mouse over things</em> for info<br />
+          <br />
+          <button onclick="sounds.click.play();pause();config.mode='hard';ui.a.classList.add('hidden');restart()">play</button>
+          <button onclick="sounds.click.play();pause();config.mode='peaceful';ui.a.classList.add('hidden');restart()">peaceful mode</button>
+        </p>
+      </div>
+
+      <div id="win_menu" class="hidden">
+
+      </div>
+
+      <div id="game" class="hidden">
+        <div id="ui">
+          <span id="distance"></span>m away<br />
+          battery: <span id="time"></span>%
+        </div>
+
+        <div id="main_wrapper">
+          <div id="main"></div>
+          <div id="mod_wrapper">
+            <div id="mod">
+                |&nbsp;&nbsp;&nbsp;|<br />
+                <span id="movement_slot_1" class="movement"></span> <span onmouseover="tooltip(d.you)" onmouseout="tooltip()" class="player">U</span> <span id="movement_slot_2" class="movement"></span><br />
+                <span id="digger_slot_1" class="digger"></span>[<span id="core_slot" class="core" onmouseover="tooltip('core //<br/> status: failing<br />integrity: -5')" onmouseout="tooltip()"></span>]<span id="digger_slot_2" class="digger"></span>
+            </div>
+            <span onclick="ui.a.classList.add('hidden')" id="a"></span>
+          </div>
+        </div>
+
+        <div id="inventory_wrapper" class="hidden">
+          inventory
+          <span id="inventory"></span>
+        </div>
+      </div>
+    </div>
+    <span id="tooltip"></span>
+  </body>
+
+  <script src="d.js" charset="utf-8"></script>
+  <script src="howler.core.js" charset="utf-8"></script>
+  <script src="config.js" charset="utf-8"></script>
+  <script src="menu.js" charset="utf-8"></script>
+  <script src="player.js" charset="utf-8"></script>
+  <script src="robot.js" charset="utf-8"></script>
+  <script src="diggables.js" charset="utf-8"></script>
+  <script src="map.js" charset="utf-8"></script>
+  <script src="main.js" charset="utf-8"></script>
+</html>

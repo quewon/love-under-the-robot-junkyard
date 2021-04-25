@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;1,500&display=swap');
+
+html {
+  font-family: 'DM Mono', monospace;
+  /* --text: #adadad;
+  --bg: #35403e;
+  --player: #fcba03;
+
+  --trash: #787468;
+  --rubble: gray;
+  --ctrash: darkred;
+  --crubble: brown;
+  --bedrock: black;
+
+  --power: lightgreen;
+
+  --old: brown;
+  --new: blue; */
+
+  --text: #e0e0e0;
+  --bg: #62787a;
+  --player: #ffc84a;
+  --love: #fcaec8;
+
+  --trash: #719399;
+  --rubble: #85a1a6;
+  --ctrash: #3a575c;
+  --crubble: #344c52;
+  --bedrock: #203940;
+
+  --power: #ceebbc;
+  --unpower: #c4cfc2;
+
+  --old: var(--player);
+  --new: #aa34d9;
+
+  color: var(--text);
+  background-color: var(--bg);
+}
+
+#container {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 15em;
+}
+
+#main {
+  line-height: 1em;
+  border: 1px solid var(--text);
+  padding: 1em;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+  cursor: default;
+}
+
+#ui {
+  display: block;
+  margin-bottom: 1em;
+}
+
+#inventory_wrapper {
+  display: block;
+  margin-top: 1em;
+  word-break: break-all;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#main_wrapper {
+  position: relative;
+}
+
+#mod_wrapper {
+  position: absolute;
+  top: 78px;
+  right: 0;
+  transform: translateX(calc(100% + 1em));
+  display: inline-block;
+  float: right;
+  box-sizing: border-box;
+}
+
+#movement_slot_1, #movement_slot_2, #digger_slot_1, #digger_slot_2, #core_slot {
+  opacity: 0.5;
+}
+
+#main span, #pause_menu span, #inventory span {
+  cursor: help
+}
+
+button {
+  margin-bottom: 1em;
+  border: 1px solid var(--text);
+  background: none;
+  font-size: inherit;
+  color: inherit;
+  font-family: inherit;
+  padding: 0.5em;
+  padding-left: 1em;
+  padding-right: 1em;
+  width: 100%;
+}
+button:hover {
+  cursor: pointer;
+  background: var(--text);
+  color: var(--bg)
+}
+button:active {
+  border: 1px solid var(--bg);
+}
+
+a {
+  color: var(--player);
+  text-decoration: none;
+}
+
+#tooltip {
+  position: absolute;
+  display: block;
+  margin-top: 1em;
+  background-color: var(--text);
+  color: var(--bg);
+  padding-left: 1em;
+  padding-right: 1em;
+  opacity: 0.75;
+  max-width: 15em;
+  box-sizing: border-box;
+  text-align: justify;
+  /* word-break: break-all; */
+}
+
+#a {
+  display: block;
+  margin-top: 1em;
+  background-color: var(--text);
+  color: var(--bg);
+  text-align: justify;
+  max-width: 15em;
+  box-sizing: border-box;
+  padding-left: 1em;
+  padding-right: 1em;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none !important;
+}
+
+em {
+  font-style: normal;
+  background-color: var(--player);
+  color: var(--bg);
+}
+
+p {
+  display: inline;
+  margin: 0;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+.movement { font-style: italic; }
+.core { font-weight: 900; cursor: help }
+.digger { text-decoration: underline; }
+
+.player { color: var(--player); opacity:1 !important; cursor: help; }
+.love { color: var(--love) }
+
+.ground1_1 { color: var(--trash); }
+.ground1_2 { color: var(--rubble); }
+.ground2_1 { color: var(--ctrash); }
+.ground2_2 { color: var(--crubble); }
+.bedrock { color: var(--bedrock); }
+.lastrow { color: var(--text) }
+.powerbank1 {
+  color: var(--power)
+}
+
+.robot * { opacity: 0.75 }
+.powersuck { color: var(--unpower) }
+.partstealer { color: var(--player) }
+
+.parts { color: var(--player); opacity: 0.75 }
+.old { color: var(--old) }
+.new { color: var(--new) }
