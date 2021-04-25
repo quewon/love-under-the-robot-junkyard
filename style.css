@@ -38,6 +38,16 @@ html {
   background-color: var(--bg);
 }
 
+#loading {
+  word-break: break-all;
+  max-width:15em;
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  opacity:0.5;
+  font-style: italic;
+}
+
 #container {
   position: absolute;
   top: 15%;
