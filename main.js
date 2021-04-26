@@ -45,12 +45,30 @@ window.onload = function() {
       music[2][1].state() == "loaded" &&
       music[2][2].state() == "loaded" &&
       music[3][0].state() == "loaded" &&
-      music[3][1].state() == "loaded"
+      music[3][1].state() == "loaded" &&
+      sounds.digs[0].state() == "loaded" &&
+      sounds.digs[1].state() == "loaded" &&
+      sounds.digs[2].state() == "loaded" &&
+      sounds.digs[3].state() == "loaded" &&
+      sounds.partstolen.state() == "loaded" &&
+      sounds.partgained.state() == "loaded" &&
+      sounds.powerlost.state() == "loaded" &&
+      sounds.powergained.state() == "loaded" &&
+      sounds.click.state() == "loaded"
     ) {
       ui.loading.classList.add("hidden");
       ui.pause_menu.classList.remove("hidden");
       sounds.atmosphere.play();
       clearInterval(check);
+
+      window.addEventListener("keypress", function(e) {
+        if (e.key === "Escape") {
+          e.preventDefault();
+          if (!menu_open) {
+            pause();
+          }
+        }
+      })
     }
   }, 100);
 };

@@ -1,4 +1,4 @@
-var menu_open = false;
+var menu_open = true;
 
 function game_over() {
   config.died++;
