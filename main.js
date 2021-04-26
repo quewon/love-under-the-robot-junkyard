@@ -19,17 +19,20 @@ window.onload = function() {
 
   music = {
     1: [
-      new Howl({src: "music/bell.mp3"}),
-      new Howl({src: "music/lowkey.mp3"}),
+      // new Howl({src: "music/bell.mp3"}),
+      // new Howl({src: "music/lowkey.mp3"}),
+      new Howl({src: "music/1.mp3"})
     ],
     2: [
-      new Howl({src: "music/pad.mp3"}),
-      new Howl({src: "music/perc.mp3"}),
-      new Howl({src: "music/bass.mp3"}),
+      // new Howl({src: "music/pad.mp3"}),
+      // new Howl({src: "music/perc.mp3"}),
+      // new Howl({src: "music/bass.mp3"}),
+      new Howl({src: "music/2.mp3"})
     ],
     3: [
-      new Howl({src: "music/keys.mp3"}),
-      new Howl({src: "music/tuba.mp3"}),
+      // new Howl({src: "music/keys.mp3"}),
+      // new Howl({src: "music/tuba.mp3"}),
+      new Howl({src: "music/3.mp3"})
     ]
   };
 
@@ -40,12 +43,12 @@ window.onload = function() {
     if (
       sounds.atmosphere.state() == "loaded" &&
       music[1][0].state() == "loaded" &&
-      music[1][1].state() == "loaded" &&
+      // music[1][1].state() == "loaded" &&
       music[2][0].state() == "loaded" &&
-      music[2][1].state() == "loaded" &&
-      music[2][2].state() == "loaded" &&
+      // music[2][1].state() == "loaded" &&
+      // music[2][2].state() == "loaded" &&
       music[3][0].state() == "loaded" &&
-      music[3][1].state() == "loaded" &&
+      // music[3][1].state() == "loaded" &&
       sounds.digs[0].state() == "loaded" &&
       sounds.digs[1].state() == "loaded" &&
       sounds.digs[2].state() == "loaded" &&
