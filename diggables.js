@@ -34,6 +34,7 @@ function init_diggables() {
     function() {
       powerPlayer(5 + Math.floor(Math.random() * 5));
       a(d.powerbank);
+      sounds.powergained.play();
     }
   );
   diggables["p1"] = new Diggable(
@@ -44,6 +45,7 @@ function init_diggables() {
     function() {
       powerPlayer(1 + Math.floor(Math.random() * 2));
       a(d.powerbank);
+      sounds.powergained.play();
     }
   );
   diggables["R1"] = new Diggable(
